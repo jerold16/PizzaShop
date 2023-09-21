@@ -6,25 +6,30 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Items } from './PizzaCard';
 import "../index.css"
 import { Offcanvas } from 'react-bootstrap';
-import CartList from '../ProfileComponent/CartList';
+import  CartList from '../ProfileComponent/CartList';
+import Order from '../ProfileComponent/Order';
 const HomeNav = () => {
   let num =Items.length
-  
   const [show, setShow] = useState(false);
   const[cartshow,setcart]=useState(false)
+  const [showorder,setorder]=useState(false)
  let user=JSON.parse(localStorage.getItem("user"))
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const showcart=()=>setcart(true)
   const closecart=()=>setcart(false)
+  const vieworder=()=>{setorder(true)}
+  const closeorder=()=>setorder(false)
   let navi=useNavigate()
   let Logout=()=>{
        navi("/")
        localStorage.removeItem("user")
+       localStorage.removeItem("bag")
   }
   let profo=()=>{
     navi("/profile")
   }
+  
   return (
     <div>
     <Navbar expand="lg" className="bg-body-tertiary my-0">
@@ -63,11 +68,11 @@ const HomeNav = () => {
         <Offcanvas.Body>
           <div>
           <button onClick={profo} className="border-none bg-transparent text-decoration-none text-xl text-black">Profile</button>
-          </div><div><button className="border-none bg-transparent text-decoration-none text-xl text-black">Orders</button>
-          </div><div><button className="border-none bg-transparent text-decoration-none text-xl text-black">Contact us</button>
-</div>
-<div><button onClick={Logout} className="border-none bg-transparent text-decoration-none text-xl text-black">Log out</button>
-</div>
+                </div>
+          <div><button onClick={vieworder} className="border-none bg-transparent text-decoration-none text-xl text-black">Orders</button>
+              </div>
+           <div><button onClick={Logout} className="border-none bg-transparent text-decoration-none text-xl text-black">Log out</button>
+             </div>
         </Offcanvas.Body>
       </Offcanvas>
      
@@ -78,6 +83,17 @@ const HomeNav = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
            <CartList/>
+        </Offcanvas.Body>
+      </Offcanvas>
+      
+      
+      <Offcanvas show={showorder} placement={'start'} onHide={closeorder}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+           <h2 className=' text-red-950'> Orders </h2></Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+           <Order/>
         </Offcanvas.Body>
       </Offcanvas>
   </div>

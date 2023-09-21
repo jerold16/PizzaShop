@@ -4,6 +4,7 @@ import Banner from './Banner'
 import Menu from './Menu'
 import PickoftheWeek from './PickoftheWeek'
 import Appnav from './Appnav'
+import Footer from './Footer'
 const Home = () => {
   return (
     <section  id=''>
@@ -15,6 +16,7 @@ const Home = () => {
         </Row>
         <Menu/>
         <PickoftheWeek/>
+        <Footer/>
         </section>
   )
 }

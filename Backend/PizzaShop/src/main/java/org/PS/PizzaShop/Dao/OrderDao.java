@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.PS.PizzaShop.Dto.DiaOrder;
+import org.PS.PizzaShop.Dto.User;
 import org.PS.PizzaShop.repository.Orderrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,4 @@ public class OrderDao {
 	public void cancel(int id) {
 		rep.deleteById(id);
 	}
-
 }

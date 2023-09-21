@@ -11,8 +11,9 @@ import Welcome from './Component/Welcome'
 import HomeNav from './Component/HomeNav'
 import Forgot from './Component/Forgot'
 import Changepassword from './Component/Changepassword'
-import CartList from './ProfileComponent/CartList'
 import Profiled from './ProfileComponent/Profiled'
+import Order from './ProfileComponent/Order'
+import Contactus from './Component/Contactus'
 const App = () => {
   return (
     <div>
@@ -23,12 +24,12 @@ const App = () => {
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/welcome' element={<Protect Child={Welcome}/>}/>
             <Route path='/homenav' element={<Protect Child={HomeNav}/>}/>
-            <Route path='/cart' element={<Protect Child={CartList}/>}/>
             <Route path='/profile' element={<Protect Child={Profiled}/>}/>
-
-
+            <Route path='/orderpage' element={<Order/>}/>
+            <Route path='/us' element={<Contactus/>}/>
             <Route path='/ft' element={<Forgot/>}/>
             <Route path='/cp' element={<Changepassword/>}/>
+            <Route path='/footer' element={<footer/>}/>
         </Routes>
         </BrowserRouter>
     

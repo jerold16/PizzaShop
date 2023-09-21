@@ -44,7 +44,7 @@ public class UserController {
 	public ResponseEntity<ResponseStructre<User>> Verifyemail(@RequestParam String email){
 		return ser.verifyUser(email);
 	}
-	@DeleteMapping("/user")
+	@DeleteMapping("/user/{id}")
 	public ResponseEntity<ResponseStructre<String>> delete(@PathVariable int id){
 		return ser.delete(id);
 	}
@@ -52,5 +52,4 @@ public class UserController {
 	public ResponseEntity<ResponseStructre<User>> changepassword(@PathVariable int id , @RequestParam String password){
 		return ser.changepassword(id, password);
 	}
-
 }

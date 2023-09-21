@@ -1,8 +1,10 @@
 package org.PS.PizzaShop.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.PS.PizzaShop.Dao.UserDao;
+import org.PS.PizzaShop.Dto.EmailConfiguration;
 import org.PS.PizzaShop.Dto.ResponseStructre;
 import org.PS.PizzaShop.Dto.User;
 import org.PS.PizzaShop.Exception.IDNotFoundException;
@@ -11,10 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Service
 public class UserService {
 	@Autowired
 	private UserDao dao;
+	
+	@Autowired
+	private EmailConfiguration configuration;
+	
 	public ResponseEntity<ResponseStructre<User>> save(User u){
 		ResponseStructre<User> res=new ResponseStructre<>();
 		res.setData(dao.save(u));
@@ -100,5 +108,6 @@ public class UserService {
 		}
 		throw new IDNotFoundException();
 	}
+	
 
 }

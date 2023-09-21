@@ -75,8 +75,7 @@ const PizzaCard = () => {
       }
   return (
     <div>
-      <Row >
-        
+      <Row > 
         {
         pizza.map((pi)=>{
           localStorage.setItem(`${pi.id}`,JSON.stringify(pi))

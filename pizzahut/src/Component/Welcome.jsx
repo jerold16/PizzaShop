@@ -4,6 +4,7 @@ import Banner from './Banner'
 import Menu from './Menu'
 import PickoftheWeek from './PickoftheWeek'
 import HomeNav from './HomeNav'
+import Footer from './Footer'
 
 const Welcome = () => {
   
@@ -17,6 +18,7 @@ const Welcome = () => {
             </Row>
             <Menu/>
             <PickoftheWeek/>
+            <Footer/>
             </section>
       )
     

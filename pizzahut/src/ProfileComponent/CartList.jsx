@@ -1,26 +1,31 @@
-import React, { useState } from 'react'
-import { Badge, Button, ListGroup } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Button, ListGroup } from 'react-bootstrap'
 import { Items } from '../Component/PizzaCard'
 import axios from 'axios'
 import "../index.css"
 import { useNavigate } from 'react-router'
 const CartList = () => {
-  let bag=Items
+ let bag=Items
   let navi=useNavigate()
   let sum=0
+  let amnt=0
+  let [show,setshow]=useState(false)
   if(bag.length>0)
   {
-    for(let i=0;i<=bag.length-1;i++){
+    for(let i=0;i<=bag.length-1;i++)
+    {
      sum=sum+bag[i].cost;
     }
+    amnt=sum*0.90
   }
-  let Total=()=>{
-    return(
-      <div className=" d-flex justify-end my-3 p-2">
-            <h3 className='text-black'>Total : {sum}</h3>
-        </div>
-    )
-  }
+  useEffect(()=>{
+        if(sum>0){
+          setshow(true)
+        }
+        if(sum===0){
+          setshow(false)
+        }
+  },[sum])
   let U=JSON.parse(localStorage.getItem("user"))
   let remove=(n)=>{
     for(let i=0;i<=bag.length;i++){
@@ -31,13 +36,26 @@ const CartList = () => {
       }
     }
   }
+  
+  let Total =()=>{
+    return(
+<div visibi className=" d-flex justify-end my-3">
+  {
+    show && <h4 className='text-black' > <pre>Total : {sum}</pre>
+     <pre>Discount : 10% </pre>
+     Amount to pay : {amnt}
+    </h4> 
+  }
+        </div>
+    )
+  }
   let order=(e)=>{
     e.preventDefault()
     if(bag.length>0){
     axios.post((`http://localhost:8080/orderall/${U.id}`),bag)
               .then((response)=>{
-                alert("order has been placed")
                 localStorage.setItem("bag",JSON.stringify(response.data.data))
+                alert("order has been placed")
                 bag.splice(0,bag.length)
                 navi("/welcome")
               }) 
@@ -47,8 +65,7 @@ const CartList = () => {
               })}
               else
                  alert("Add pizzas to the cart")
-  }
-  
+  } 
   return (
     <div>
         {
@@ -65,18 +82,15 @@ const CartList = () => {
         <div className='d-flex align-items-center justify-end'>
                 <Button className='bg-red-600 h-8  border-none text-white' onClick={()=>{remove(pizza.name)}} >Remove</Button>
              </div>
-        <Badge bg="primary" pill>
-          
-        </Badge>
       </ListGroup.Item>
     </ListGroup>
                </div>
             );
           })
         }
-        <Total/>
+        <Total show={show}/>
         <div className='d-flex justify-end'>
-            <Button onClick={order} className="bg-red-600 text-red-50">Order</Button>
+            <Button onClick={order} className="bg-red-600 text-red-50 mx-2">Order</Button>
         </div>
     </div>
   )

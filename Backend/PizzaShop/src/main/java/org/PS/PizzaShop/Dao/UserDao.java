@@ -1,5 +1,6 @@
 package org.PS.PizzaShop.Dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.PS.PizzaShop.Dto.User;
@@ -31,7 +32,7 @@ public class UserDao {
 		rep.deleteById(id);
 	}
 	public Optional<User> verifyUser(String email){
+		
 		return rep.verifyUser(email);
 	}
-
 }
