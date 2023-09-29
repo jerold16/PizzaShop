@@ -1,0 +1,13 @@
+package org.PS.PizzaShop.Dto;
+
+import org.springframework.stereotype.Repository;
+
+import lombok.Data;
+
+@Data
+@Repository
+public class Pizza {
+	private String name;
+	private double cost;
+
+}

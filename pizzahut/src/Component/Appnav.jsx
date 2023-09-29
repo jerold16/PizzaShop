@@ -4,7 +4,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "../index.css"
 const Appnav = () => {    
-
   return (
   <Navbar expand="lg" className="bg-body-tertiary my-0">
   <Container fluid>

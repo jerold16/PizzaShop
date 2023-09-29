@@ -1,0 +1,5 @@
+package org.PS.PizzaShop.Dto;
+
+public class Pizza {
+
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import Login from './Login'
 
 const Protect = ({Child}) => {
-    let user=localStorage.getItem("user")
+    let user=sessionStorage.getItem("user")
     let verify=()=>{
         if(user==null){
             return false

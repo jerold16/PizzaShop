@@ -2,24 +2,26 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router'
+import { neworder } from './CartList'
 const Order = () => {
-  let user=JSON.parse(localStorage.getItem("user"))
-  let previousor=[]
-  previousor=user.orders
+  let user=JSON.parse(sessionStorage.getItem("user"))
+  let previousor= user.orders
+  console.log(previousor);
   let userid=user.id
-  let bag=[]
+  let bag
   try{
-    bag = Object.values(JSON.parse(localStorage.getItem("bag")))
-  }
-  catch(error){
-    console.log(bag)
-  }
+      bag=neworder
+    }
+  catch{
+
+      }
+      console.log(bag)
   let [show,setshow]=useState(true)
   let [orderss,setorder]=useState(false)
   let [showprevious,setshowprevious] =useState(false)
   let [showhistory,sethistory]=useState(true)
   useEffect(()=>{
-     if( bag.length>0){
+     if(bag.length>0){
       setshow(false)
       setorder(true)
      }
@@ -29,20 +31,36 @@ const Order = () => {
      }
   },[])
   let navi=useNavigate()
-   let currentid=[]
-   let cancel=()=>{
-      currentid.map((id)=>{
-      remove(id)
-      console.log(id)
-      })
-      setshow(true)
-      setorder(false)
-      localStorage.removeItem("bag")
-   }
   let remove=(id)=>{
+      for(let i=0;i<=bag.length;i++){
+        if(bag[i].id===id){
+          cancel(id)
+          bag.splice(i,1)
+          navi("/welcome")
+          break;
+        }
+      }
+      if(bag.length===0){
+        setshow(true)
+        setorder(false)
+       }
+  }
+   
+  let erase=(id)=>{
     axios.delete(`http://localhost:8080/order/${id}`)
     .then(()=>{
-      navi("/welcome")  
+      console.log("done"); 
+      getuser()
+    })
+    .catch((error)=>{
+      alert("something went wrong")
+      console.log(error)
+    })
+  }
+  let cancel=(id)=>{
+    axios.delete(`http://localhost:8080/order/${id}`)
+    .then(()=>{
+      console.log("done"); 
     })
     .catch((error)=>{
       alert("something went wrong")
@@ -50,21 +68,19 @@ const Order = () => {
     })
   }
 let clearhistory =()=>{
-  previousor.map((pizza)=>{
-      remove(pizza.id)
-      console.log(pizza.id)
-  })
+  previousor.map((item)=>{
+    erase(item.id)
+   })
   sethistory(true)
   setshowprevious(false)
-  getuser(userid)
 }
-let getuser=(id)=>{
-  axios.get(`http://localhost:8080/user/${id}`)
-  .then((response)=>{
-    localStorage.setItem("user",JSON.stringify(response.data.data))
-  })
+let getuser=(e)=>{
+  axios.get(`http://localhost:8080/user/${userid}`)
+   .then((response)=>{
+    sessionStorage.setItem("user",JSON.stringify(response.data.data))
+    console.log("user changed")
+      })
   .catch((error)=>{
-    alert("something went wrong")
     console.log(error)
   })
 }
@@ -79,17 +95,42 @@ let getuser=(id)=>{
           orderss && <div>
           {
             bag.map((pizza)=>{
-              currentid.push(pizza.id)
+              let id= pizza.id
+              console.log(pizza.items)
+              let item=[]
+             item=pizza.items
               return(
                 <div>
-                     <h3>{pizza.name}</h3> <p>{pizza.cost}</p> <hr /> 
-                </div>
+                  <hr />
+                  <h4>Order ID :{pizza.id}</h4>
+                     <div>
+                               {item.map((items)=>{
+                              return(
+                                <div className='d-flex justify-between'>
+                                  <h5> {items.name} </h5>
+                                  Price : {items.cost}
+                                </div>
+                              )
+                                })}
+                        </div>
+                        <div className='d-flex justify-end'>
+                        <h5> Total amnt : {pizza.total_amnt}</h5>
+                        </div>
+                        <div className='d-flex justify-end'>
+                        <h5> Discount amnt : {pizza.discount_amnt}</h5>
+                        </div>
+                        <div className='d-flex justify-end'>
+                        <h5> Amount paid : {pizza.amnt_paid}</h5>
+                        </div>
+                        <div className='d-flex my-3 justify-end'>
+       <Button className='text-white' onClick={()=>{remove(id)}}>Cancel</Button>
+          </div>
+                    </div>
               )
             })
           }
-          <div className='d-flex justify-end'>
-       <Button className='text-white' onClick={cancel}>Cancel</Button>
-          </div>
+          
+          <hr />
         </div>
         }
 
@@ -105,14 +146,36 @@ let getuser=(id)=>{
           previousor.map((pi)=>{
                 return (
                   <div>
-                     <div className='d-flex justify-between mx-4'>
-                        <h5>{pi.name}</h5><p>Cost : {pi.cost}</p></div>
+                     <div className='d-flex flex-column justify-between mx-4'>
+                     <h5>Order Id : {pi.id}</h5> <div id='Items'>
+                               {pi.items.map((item)=>{
+                              return(
+                                <div className='d-flex justify-between'>
+                                  <h5> {item.name} </h5>
+                                  Price : {item.cost}
+                                </div>
+                              )
+                                })}
+                           </div>
+                          
+                           <div className='d-flex justify-end'>
+                        <h5> Total amnt : {pi.total_amnt}</h5>
+                        </div>
+                           <div className='d-flex justify-end'>
+                        <h5> Discount amnt : {pi.discount_amnt}</h5>
+                        </div>
+                        <div className='d-flex justify-end'>
+                        <h5> Amount paid : {pi.amnt_paid}</h5>
+                        </div>
+                       
+                        </div>
                         <hr />
                   </div>
 
                 )
           })
-        }<div className='d-flex justify-end'>
+        }
+        <div className='d-flex justify-end'>
         <button className='bg-slate-700 border-none text-white h-9 rounded' onClick={clearhistory}>Clear history</button>
            </div>
         </div>

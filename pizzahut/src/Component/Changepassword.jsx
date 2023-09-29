@@ -4,7 +4,7 @@ import { Button, FloatingLabel, Form, InputGroup, Modal } from 'react-bootstrap'
 import { useNavigate } from 'react-router'
 
 const Changepassword = () => {
-    let user=JSON.parse(localStorage.getItem("user"))
+    let user=JSON.parse(sessionStorage.getItem("user"))
     let navi=useNavigate()
     const [show, setShow] = useState(true);
     const handle = () => {setShow(false)
@@ -18,8 +18,8 @@ const Changepassword = () => {
             axios.put(`http://localhost:8080/changepassword/${user.id}?password=${confirmpassword}`)
             .then((response)=>{
                 alert("password has been changed")
-                localStorage.removeItem("user")
-                localStorage.removeItem("otp")
+                sessionStorage.removeItem("user")
+                sessionStorage.removeItem("otp")
                 navi("/login")
             })
             .catch((error)=>{

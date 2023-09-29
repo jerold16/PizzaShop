@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Items } from './PizzaCard';
 import "../index.css"
 import { Offcanvas } from 'react-bootstrap';
-import  CartList from '../ProfileComponent/CartList';
+import  {CartList, bag} from '../ProfileComponent/CartList';
 import Order from '../ProfileComponent/Order';
+import { Items } from './PizzaCard';
 const HomeNav = () => {
-  let num =Items.length
+  let num
+  try{
+   num =Items.length
+  }
+  catch{
+  }
   const [show, setShow] = useState(false);
   const[cartshow,setcart]=useState(false)
   const [showorder,setorder]=useState(false)
- let user=JSON.parse(localStorage.getItem("user"))
+  let user=JSON.parse(sessionStorage.getItem("user"))
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const showcart=()=>setcart(true)
@@ -23,8 +28,8 @@ const HomeNav = () => {
   let navi=useNavigate()
   let Logout=()=>{
        navi("/")
-       localStorage.removeItem("user")
-       localStorage.removeItem("bag")
+       sessionStorage.removeItem("user")
+       sessionStorage.removeItem("bag")
   }
   let profo=()=>{
     navi("/profile")
@@ -82,7 +87,10 @@ const HomeNav = () => {
            <h2 className=' text-red-950'> Cart </h2></Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-           <CartList/>
+           <Routes>
+              <Route path='/*' element={<CartList/>}/>
+           </Routes>
+
         </Offcanvas.Body>
       </Offcanvas>
       

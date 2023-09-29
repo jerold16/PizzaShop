@@ -2,6 +2,7 @@ package org.PS.PizzaShop.ControllerAdvice;
 
 import org.PS.PizzaShop.Dto.ResponseStructre;
 import org.PS.PizzaShop.Exception.IDNotFoundException;
+import org.PS.PizzaShop.Exception.InvalidCouponException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,14 @@ public class PizzaShopExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<ResponseStructre<String>> exceptione(IDNotFoundException e){
 	ResponseStructre<String> res=new ResponseStructre<>();
 	res.setData("Invalid ID");
+	res.setMessage(e.getMessage());
+	res.setStatuscode(HttpStatus.NOT_FOUND.value());
+	return new ResponseEntity<ResponseStructre<String>>(res, HttpStatus.NOT_FOUND);
+}
+@ExceptionHandler(InvalidCouponException.class)
+public ResponseEntity<ResponseStructre<String>> Coupon(InvalidCouponException e){
+	ResponseStructre<String> res=new ResponseStructre<>();
+	res.setData("Coupon not found");
 	res.setMessage(e.getMessage());
 	res.setStatuscode(HttpStatus.NOT_FOUND.value());
 	return new ResponseEntity<ResponseStructre<String>>(res, HttpStatus.NOT_FOUND);

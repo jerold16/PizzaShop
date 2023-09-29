@@ -15,7 +15,7 @@ const Login = () => {
     if(check===true){
       axios.post(`http://localhost:8080/verifyemail?email=${email}&password=${password}`)
       .then((response)=>{
-          localStorage.setItem("user",JSON.stringify(response.data.data))
+          sessionStorage.setItem("user",JSON.stringify(response.data.data))
           navi("/welcome")
           setShow(false)
       })
@@ -27,7 +27,7 @@ const Login = () => {
     else{
     axios.post(`http://localhost:8080/verifyphone?phone=${email}&password=${password}`)
     .then((response)=>{
-        localStorage.setItem("user",JSON.stringify(response.data.data))
+        sessionStorage.setItem("user",JSON.stringify(response.data.data))
         navi("/welcome")
         setShow(false)
     })

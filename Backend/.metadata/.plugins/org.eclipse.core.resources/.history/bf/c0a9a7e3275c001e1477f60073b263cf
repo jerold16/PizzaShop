@@ -1,0 +1,5 @@
+package org.PS.PizzaShop.Dao;
+
+public class CouponDao {
+
+}

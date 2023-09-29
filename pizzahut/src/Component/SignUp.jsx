@@ -17,7 +17,7 @@ const SignUp = () => {
     let User={name,email,phone,password}
     axios.post((`http://localhost:8080/user`),User)
     .then((response)=>{
-        localStorage.setItem("user",JSON.stringify(response.data.data))
+        sessionStorage.setItem("user",JSON.stringify(response.data.data))
         alert("registeration is Successfull")
         navi("/")
         setShow(false)

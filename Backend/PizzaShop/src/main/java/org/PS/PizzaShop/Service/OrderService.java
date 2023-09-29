@@ -1,12 +1,15 @@
 package org.PS.PizzaShop.Service;
 
 import java.lang.StackWalker.Option;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import org.PS.PizzaShop.Dao.Itemdao;
 import org.PS.PizzaShop.Dao.OrderDao;
 import org.PS.PizzaShop.Dao.UserDao;
 import org.PS.PizzaShop.Dto.DiaOrder;
+import org.PS.PizzaShop.Dto.Items;
 import org.PS.PizzaShop.Dto.ResponseStructre;
 import org.PS.PizzaShop.Dto.User;
 import org.PS.PizzaShop.Exception.IDNotFoundException;
@@ -22,6 +25,10 @@ public class OrderService {
 	private OrderDao dao;
 	@Autowired
 	private UserDao udao;
+	@Autowired
+	private Itemdao idao;
+	@Autowired
+	private ItemService ser;
 	public ResponseEntity<ResponseStructre<DiaOrder>> order(int id,DiaOrder o){
 		ResponseStructre<DiaOrder> res=new ResponseStructre<>();
 		Optional<User> resu= udao.findbyID(id);
@@ -29,6 +36,10 @@ public class OrderService {
 			User u=resu.get();
 			u.getOrders().add(o);
 			o.setUser(u);
+			List<Items> items=o.getItems();
+			for(Items i : items) {
+				i.setOrder(o);
+			}
 			udao.Update(u);
 			dao.save(o);
 			res.setData(o);

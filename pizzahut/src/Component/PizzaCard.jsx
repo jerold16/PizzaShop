@@ -3,18 +3,19 @@ import React, { useEffect, useState } from 'react'
 import { Card,Button, Row , Col  } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router';
+import { pizzaop } from '../ProfileComponent/Pizzas';
 let Items=[]
 const PizzaCard = () => {
   let [pizza,setPizza] =useState([])
   let navi=useNavigate()
   const [modalShow, setModalShow] = useState(false);
-  let User=JSON.parse(localStorage.getItem("user"))
+  let User=JSON.parse(sessionStorage.getItem("user"))
   useEffect(()=>{
     let view=()=>{
       axios.get(`http://localhost:8080/menu`)
       .then((response)=>{
         setPizza(response.data.data)
-        localStorage.setItem("menu",JSON.stringify(response.data.data))
+        sessionStorage.setItem("menu",JSON.stringify(response.data.data))
       })
       .catch((error)=>{
         console.log(error)
@@ -38,7 +39,7 @@ const PizzaCard = () => {
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  Your pizza added to the Cart
+                  Your item added to the Cart
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -62,7 +63,7 @@ const PizzaCard = () => {
             <Modal.Body>
               <h4>Dear Customer ,</h4>
               <p>
-                Please login before you add pizza to the Cart
+                Please login before you add item to the Cart
               </p>
             </Modal.Body>
             <Modal.Footer>
@@ -74,22 +75,22 @@ const PizzaCard = () => {
         
       }
   return (
-    <div>
-      <Row > 
+    <div  className='text-center'>
+      <Row> 
         {
         pizza.map((pi)=>{
-          localStorage.setItem(`${pi.id}`,JSON.stringify(pi))
-          let U =JSON.parse(localStorage.getItem("user"))
+          sessionStorage.setItem(`${pi.id}`,JSON.stringify(pi))
+          let U =JSON.parse(sessionStorage.getItem("user"))
          
           let order=(e)=>{
             e.preventDefault()
             if(U!=null){
-              let order=JSON.parse(localStorage.getItem(`${pi.id}`))
+              let order=JSON.parse(sessionStorage.getItem(`${pi.id}`))
               let name= order.name
               let cost=order.price
               let del_time="within 45 mins"
-              Items.push({name,cost,del_time}) 
-              navi("/welcome")
+              Items.push({name,cost,del_time})
+              navi("/welcome/*")
               setModalShow(true)
             }
             else

@@ -8,14 +8,14 @@ const PickoftheWeek = () => {
     let [Pizza,setPizza]=useState([])
   const [modalShow, setModalShow] = useState(false);
   let navi=useNavigate()
-  let User=JSON.parse(localStorage.getItem("user"))
+  let User=JSON.parse(sessionStorage.getItem("user"))
     useEffect(()=>{
         let ido = Math.floor((Math.random() * 9) + 1);
         let fun=()=>{
             axios.get(`http://localhost:8080/menu/${ido}`)
             .then((response)=>{
                 setPizza(response.data.data)
-                localStorage.setItem("pickoftheDay",JSON.stringify(response.data.data))
+                sessionStorage.setItem("pickoftheDay",JSON.stringify(response.data.data))
             })
             .catch((error)=>{
                 alert("something went wrong")
@@ -77,7 +77,7 @@ const PickoftheWeek = () => {
     let order=(e)=>{
         e.preventDefault()
         if(User!=null){
-          let order=JSON.parse(localStorage.getItem("pickoftheDay"))
+          let order=JSON.parse(sessionStorage.getItem("pickoftheDay"))
           let name= order.name
           let cost=order.price
           let del_time="within 45 mins"

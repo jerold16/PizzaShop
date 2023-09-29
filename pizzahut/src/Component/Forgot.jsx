@@ -14,7 +14,7 @@ const Forgot = () => {
         e.preventDefault()
         if(email.includes("@")){
             alert(eotp)
-            localStorage.setItem("otp",eotp)
+            sessionStorage.setItem("otp",eotp)
         }
         else
         {
@@ -22,12 +22,12 @@ const Forgot = () => {
     }
     let verify=(e)=>{
          e.preventDefault()
-         let num =localStorage.getItem("otp")
+         let num =sessionStorage.getItem("otp")
          if(num===otp)
          {
             axios.get(`http://localhost:8080/verifyemail?email=${email}`)
         .then((response)=>{
-           localStorage.setItem("user",JSON.stringify(response.data.data))
+           sessionStorage.setItem("user",JSON.stringify(response.data.data))
            navi("/cp")
         })
         .catch((error)=>{

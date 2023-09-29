@@ -1,13 +1,42 @@
 import Carousel from 'react-bootstrap/Carousel';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap';
+import axios from 'axios';
 const Banner = () => {
+  useEffect(()=>{
+      let fetchall=()=>{
+        axios.get(`http://localhost:8080/allcoupon`)
+        .then((response)=>{
+            sessionStorage.setItem("coupons",JSON.stringify(response.data.data))
+        })
+        .catch((error)=>{
+          console.log(error);
+        })
+      }
+      fetchall()
+      fetchcard()
+  },[])
+  let coupons = JSON.parse(sessionStorage.getItem("coupons"))
+  let ido = Math.floor((Math.random() * 7) + 1);
+  let [image,setimage]=useState("")
+    let fetchcard =()=>{
+      try{
+        coupons.map((card)=>{
+          if(card.id===ido){
+             setimage(card.imageurl)
+          }
+        })
+      }
+      catch{
+        
+      }
+    }
   return (
     <div>
         <Container fluid>
         <Carousel className='mt-2'>
             <Carousel.Item interval={1000}>
-                <img 
+                <img
                 src={require('../image/pizza 4.webp')}
                  className="d-block w-100"
                   alt="AwesomeAmericanVeg" />
@@ -48,13 +77,9 @@ const Banner = () => {
             </Carousel.Item>
             <Carousel.Item interval={1000}>
                 <img 
-             src={require('../image/pizza3.jpeg')}
+             src={image}
                  className="d-block w-100"
-                  alt="Vegexotica" />
-                  <Carousel.Caption>
-                    <h3>Vegexotica</h3>
-                    <p className="d-none d-sm-block"><h5>Toppings : </h5> Red Capsicum , Green Capsicum , Red peprica , Baby Corn</p>
-                  </Carousel.Caption>
+                  alt="Coupon" />
             </Carousel.Item>
         </Carousel></Container>
         <div className='text-center mt-4'>

@@ -24,5 +24,8 @@ public class MenuDao {
 	public List<Menu> findAll(){
 		return mrep.findAll();
 	}
+	public List<Menu> fetchbytype(String type){
+		return mrep.fetchbytype(type);
+	}
 
 }

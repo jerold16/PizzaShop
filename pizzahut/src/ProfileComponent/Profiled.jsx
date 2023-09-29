@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router'
 import "../css/mystyle.css"
 const Profiled = () => {
-  let user =JSON.parse(localStorage.getItem("user"))
+  let user =JSON.parse(sessionStorage.getItem("user"))
   let password=user.password
   let id=user.id
   let navi=useNavigate()
@@ -24,7 +24,7 @@ e.preventDefault()
 
        axios.put((`http://localhost:8080/user`),User)
        .then((response)=>{
-        localStorage.setItem("user",JSON.stringify(response.data.data))
+        sessionStorage.setItem("user",JSON.stringify(response.data.data))
         alert("User updated")
        })
        .catch((error)=>{

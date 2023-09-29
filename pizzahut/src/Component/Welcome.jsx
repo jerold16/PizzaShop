@@ -1,10 +1,11 @@
 import React from 'react'
 import{Row, Col} from "react-bootstrap"
 import Banner from './Banner'
-import Menu from './Menu'
 import PickoftheWeek from './PickoftheWeek'
 import HomeNav from './HomeNav'
 import Footer from './Footer'
+import { Route, Routes } from 'react-router'
+import Menu from './Menu'
 
 const Welcome = () => {
   
@@ -16,9 +17,12 @@ const Welcome = () => {
                   <Banner/>
                 </Col>
             </Row>
-            <Menu/>
+           <Routes>
+            <Route path = '/*' element={<Menu/>}/>
+           </Routes>
             <PickoftheWeek/>
             <Footer/>
+            
             </section>
       )
     
