@@ -41,8 +41,8 @@ public class UserController {
 		return ser.verifyUser(phone, password);
 	}
 	@GetMapping("/verifyemail")
-	public ResponseEntity<ResponseStructre<User>> Verifyemail(@RequestParam String email){
-		return ser.verifyUser(email);
+	public ResponseEntity<ResponseStructre<User>> Verifyemail(@RequestParam String email,@RequestParam int otp){
+		return ser.verifyUser(email,otp);
 	}
 	@DeleteMapping("/user/{id}")
 	public ResponseEntity<ResponseStructre<String>> delete(@PathVariable int id){

@@ -163,7 +163,6 @@ let checkcoupon =()=>{
         }
         {
            empty && <div>
-           
             <h5 className='text-center text-gray-500'> <hr />Empty Cart , hurry up and fill this !!! <hr /></h5>
            </div>
         }

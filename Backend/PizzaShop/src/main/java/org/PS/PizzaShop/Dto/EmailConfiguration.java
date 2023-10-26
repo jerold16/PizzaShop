@@ -1,15 +1,12 @@
 package org.PS.PizzaShop.Dto;
 
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import lombok.Data;
+
+@Controller
 @Data
-@Component
 public class EmailConfiguration {
-      private String subject;
-      private String template;
-      private Map<String, String> allusers;
-      
+	private String to,subject,text;
+
 }

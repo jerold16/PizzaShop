@@ -9,6 +9,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import "../index.css"
 const Footer = () => {
+  let submit =()=>{
+    window.open("https://mail.google.com/mail/u/0/#inbox?compose=XBcJlHhfpJPcdRcbCZVkJBDbDGljLvSjmfnshdqxttCjmXWCWKcDwLlcsKbVcxMQSTgTCKLZvWbgjlXQ");
+    }
   return (
     <section id='us'>
          <Container fluid className=' bg-slate-900 mt-7'>
@@ -23,7 +26,7 @@ const Footer = () => {
              </div>
              <div className='my-7'>
                  <p>For feedback?</p>
-                 <h5>pizzashop@gmail.com <Link className='text-decoration-none text-slate-300'><EmailIcon/></Link></h5>
+                 <h5>pizzashopfranz@gmail.com <Link onClick={submit} className='text-decoration-none text-slate-300'><EmailIcon/></Link></h5>
              </div>
              <hr />
             </Col>

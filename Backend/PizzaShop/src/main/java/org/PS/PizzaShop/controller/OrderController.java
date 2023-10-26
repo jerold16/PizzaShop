@@ -43,5 +43,9 @@ public class OrderController {
 	public ResponseEntity<ResponseStructre<String>> delete(@PathVariable int id){
 		return ser.delete(id);
 	}
+	@DeleteMapping("/orderwithoutemail/{id}")
+	public ResponseEntity<ResponseStructre<String>> deletewithout(@PathVariable int id){
+		return ser.deletewithoutemail(id);
+	}
 
 }

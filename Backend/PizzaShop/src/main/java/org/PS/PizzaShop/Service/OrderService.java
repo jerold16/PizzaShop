@@ -9,6 +9,7 @@ import org.PS.PizzaShop.Dao.Itemdao;
 import org.PS.PizzaShop.Dao.OrderDao;
 import org.PS.PizzaShop.Dao.UserDao;
 import org.PS.PizzaShop.Dto.DiaOrder;
+import org.PS.PizzaShop.Dto.EmailConfiguration;
 import org.PS.PizzaShop.Dto.Items;
 import org.PS.PizzaShop.Dto.ResponseStructre;
 import org.PS.PizzaShop.Dto.User;
@@ -29,6 +30,10 @@ public class OrderService {
 	private Itemdao idao;
 	@Autowired
 	private ItemService ser;
+	@Autowired
+	private EmailService service;
+	@Autowired
+	private EmailConfiguration config;
 	public ResponseEntity<ResponseStructre<DiaOrder>> order(int id,DiaOrder o){
 		ResponseStructre<DiaOrder> res=new ResponseStructre<>();
 		Optional<User> resu= udao.findbyID(id);
@@ -42,6 +47,20 @@ public class OrderService {
 			}
 			udao.Update(u);
 			dao.save(o);
+			
+			
+			//email content
+			String ite="";
+			for(Items i: items) {
+				ite+=i.getName()+" |  ";
+			}
+			config.setTo(u.getEmail());
+			config.setSubject("Order Confirmation");
+			config.setText("Your order has been placed succcesfully "+"\n"
+			+"Order items : "+ite+"\n"
+			+"Total amount paid : "+ o.getAmnt_paid()+"\n"
+			+"Thank you for the order. Enjoy the meal......!!!!");
+			service.sendemail(config);
 			res.setData(o);
 			res.setMessage("Order has been placed");
 			res.setStatuscode(HttpStatus.CREATED.value());
@@ -93,6 +112,32 @@ public class OrderService {
 		}
 		throw new IDNotFoundException();	}
       public ResponseEntity<ResponseStructre<String>> delete(int id){
+    	  ResponseStructre<String> reso=new ResponseStructre<>();
+  		Optional<DiaOrder> oo=dao.findbyid(id);
+  		if(oo.isPresent()) {
+  			User u=oo.get().getUser();
+  			List<Items> items=oo.get().getItems();
+  			String ite="";
+  			for(Items i: items) {
+  				ite+=i.getName()+" | ";
+  			}
+			config.setTo(u.getEmail());
+			config.setSubject("Cancellation Confirmation");
+			config.setText("Your order has been canceled succcesfully "+"\n"
+			+"Order items : "+ite+"\n"
+			+"Total amount paid : "+ oo.get().getAmnt_paid()+"\n" 
+			+"Refund will been initiated as soon as possible. Amount will be add in your account within 24 hours."+"\n"
+			+"           Thank you for your visit");
+			service.sendemail(config);
+  			dao.cancel(id);
+  			reso.setData("order has been canceled");
+  			reso.setMessage("ID has been found");
+  			reso.setStatuscode(HttpStatus.OK.value());
+  			return new ResponseEntity<ResponseStructre<String>>(reso,HttpStatus.OK);
+  		}
+  		throw new IDNotFoundException();
+      }
+      public ResponseEntity<ResponseStructre<String>> deletewithoutemail(int id){
     	  ResponseStructre<String> reso=new ResponseStructre<>();
   		Optional<DiaOrder> oo=dao.findbyid(id);
   		if(oo.isPresent()) {

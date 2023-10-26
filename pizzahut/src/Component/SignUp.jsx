@@ -69,7 +69,7 @@ const SignUp = () => {
       
       <div className="text-center">
       <Button variant="primary"  onClick={handleClose}>
-           Sign In
+            Register
           </Button></div>
             </Form>   
         

@@ -1,6 +1,7 @@
 package org.PS.PizzaShop.Service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.PS.PizzaShop.Dao.UserDao;
@@ -19,12 +20,18 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserService {
 	@Autowired
 	private UserDao dao;
-	
 	@Autowired
-	private EmailConfiguration configuration;
+	private EmailService service;
+	@Autowired
+	private EmailConfiguration config;
 	
 	public ResponseEntity<ResponseStructre<User>> save(User u){
 		ResponseStructre<User> res=new ResponseStructre<>();
+		config.setTo(u.getEmail());
+		config.setSubject("User account creation");
+		config.setText("Dear "+u.getName()+","+"\n"
+		+"        Your account created succesfully.Continue shopping");
+		service.sendemail(config);
 		res.setData(dao.save(u));
 		res.setMessage("User has been added");
 		res.setStatuscode(HttpStatus.CREATED.value());
@@ -32,6 +39,11 @@ public class UserService {
 	}
 	public ResponseEntity<ResponseStructre<User>> Update (User u){
 		ResponseStructre<User> res =new ResponseStructre<>();
+		config.setTo(u.getEmail());
+		config.setSubject("User account Update");
+		config.setText("Dear "+u.getName()+","+"\n"
+		+"        Your account Updated succesfully.Continue shopping");
+		service.sendemail(config);
 		res.setData(dao.Update(u));
 		res.setMessage("User has been added");
 		res.setStatuscode(HttpStatus.ACCEPTED.value());
@@ -71,10 +83,14 @@ public class UserService {
 		}
 		throw new IDNotFoundException();
 	}
-	public ResponseEntity<ResponseStructre<User>> verifyUser(String email){
+	public ResponseEntity<ResponseStructre<User>> verifyUser(String email,int otp){
 		ResponseStructre<User> res=new ResponseStructre<>();
 		Optional<User> resu= dao.verifyUser(email);
 		if(resu.isPresent()) {
+			config.setTo(email);
+			config.setSubject("Account verification");
+			config.setText("Your otp is : "+ otp);
+			service.sendemail(config);
 			res.setData(resu.get());
 			res.setStatuscode(HttpStatus.OK.value());
 			res.setMessage("Id found");
@@ -101,6 +117,10 @@ public class UserService {
 			User u=resu.get();
 			u.setPassword(password);
 			dao.Update(u);
+			config.setTo(u.getEmail());
+			config.setSubject("Password changes");
+			config.setText("Your password has been changed successfully");
+			service.sendemail(config);
 			res.setData(u);
 			res.setMessage("password has been updated");
 			res.setStatuscode(HttpStatus.ACCEPTED.value());

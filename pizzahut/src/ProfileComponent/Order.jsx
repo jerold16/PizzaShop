@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router'
 import { neworder } from './CartList'
 const Order = () => {
@@ -9,27 +9,33 @@ const Order = () => {
   console.log(previousor);
   let userid=user.id
   let bag
+  let [show,setshow]=useState(true)
+  let [orderss,setorder]=useState(false)
+  let [showprevious,setshowprevious] =useState(false)
+  let [showhistory,sethistory]=useState(true)
   try{
-      bag=neworder
+        bag=neworder   
     }
   catch{
 
       }
       console.log(bag)
-  let [show,setshow]=useState(true)
-  let [orderss,setorder]=useState(false)
-  let [showprevious,setshowprevious] =useState(false)
-  let [showhistory,sethistory]=useState(true)
-  useEffect(()=>{
-     if(bag.length>0){
-      setshow(false)
-      setorder(true)
-     }
-     if(previousor.length>0){
-      setshowprevious(true)
-      sethistory(false)
-     }
-  },[])
+      useEffect(()=>{
+        try{
+          if(bag.length>0){
+            setshow(false)
+            setorder(true)
+           }
+           if(previousor.length>0){
+            setshowprevious(true)
+            sethistory(false)
+           }
+        }
+        catch{
+
+        }
+
+      },)
   let navi=useNavigate()
   let remove=(id)=>{
       for(let i=0;i<=bag.length;i++){
@@ -46,8 +52,8 @@ const Order = () => {
        }
   }
    
-  let erase=(id)=>{
-    axios.delete(`http://localhost:8080/order/${id}`)
+  let erasehistory=(id)=>{
+    axios.delete(`http://localhost:8080/orderwithoutemail/${id}`)
     .then(()=>{
       console.log("done"); 
       getuser()
@@ -69,7 +75,7 @@ const Order = () => {
   }
 let clearhistory =()=>{
   previousor.map((item)=>{
-    erase(item.id)
+    erasehistory(item.id)
    })
   sethistory(true)
   setshowprevious(false)
@@ -147,7 +153,7 @@ let getuser=(e)=>{
                 return (
                   <div>
                      <div className='d-flex flex-column justify-between mx-4'>
-                     <h5>Order Id : {pi.id}</h5> <div id='Items'>
+                 <h5>Order Id : {pi.id}</h5> <div id='Items'>
                                {pi.items.map((item)=>{
                               return(
                                 <div className='d-flex justify-between'>
@@ -167,15 +173,15 @@ let getuser=(e)=>{
                         <div className='d-flex justify-end'>
                         <h5> Amount paid : {pi.amnt_paid}</h5>
                         </div>
-                       
                         </div>
                         <hr />
+                        
                   </div>
 
                 )
           })
         }
-        <div className='d-flex justify-end'>
+        <div className='d-flex justify-end pb-3'>
         <button className='bg-slate-700 border-none text-white h-9 rounded' onClick={clearhistory}>Clear history</button>
            </div>
         </div>

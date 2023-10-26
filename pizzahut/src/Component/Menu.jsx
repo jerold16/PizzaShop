@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container} from 'react-bootstrap'
+import { Button, Container, Nav} from 'react-bootstrap'
 import {PizzaCard} from './PizzaCard'
 import { Link, Outlet, Route, Routes } from 'react-router-dom'
 import {Pizzas} from '../ProfileComponent/Pizzas'
@@ -23,13 +23,13 @@ const Menu = () => {
                 </h2>
             </div>
               {
-                show && <div id='catogery'  className='mx-3 mt-5 d-flex justify-between'>
-                <Link to="/welcome/*" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black'>Menu</Button> </Link>
+                show && <Nav id='catogery'  className='mx-3 mt-5 d-flex justify-between'>
+                <Link to="/welcome/*" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black focus:border'>Menu</Button> </Link>
                 <Link to="/welcome/pizzas" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black'>Pizzas</Button> </Link>
                 <Link to="/welcome/dessert" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black'>Dessert</Button> </Link>
                 <Link to="/welcome/drinks" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black'>Drinks</Button> </Link>
                 <Link to="/welcome/sides" className='text-decoration-none'><Button variant='' className='text-red-600 font-medium border-none focus:text-black'>Sides</Button> </Link>
-                </div>
+                </Nav>
               }
               <hr />
              <Routes>

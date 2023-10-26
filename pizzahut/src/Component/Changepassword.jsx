@@ -35,7 +35,7 @@ const Changepassword = () => {
     <div>
         <Modal show={show} onHide={handle}>
         <Modal.Header closeButton>
-          <Modal.Title>Verification</Modal.Title>
+          <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form>

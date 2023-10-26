@@ -10,7 +10,7 @@ const Login = () => {
     navi("/")}
     let [email,setEmail]=useState("")
     let [password,setPassword]=useState("")
-  const Close = (e) =>{
+  const signin = (e) =>{
     let check=email.includes("@")
     if(check===true){
       axios.post(`http://localhost:8080/verifyemail?email=${email}&password=${password}`)
@@ -68,7 +68,7 @@ const Login = () => {
       <a href="/ft">Forget password?</a>
       </div>
       <div className="text-center">
-      <Button variant="secondary" onClick={Close}>
+      <Button variant="secondary" onClick={signin}>
            Sign In
           </Button></div>
             </Form>   

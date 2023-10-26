@@ -13,8 +13,15 @@ const Forgot = () => {
     const Generate = (e) => {
         e.preventDefault()
         if(email.includes("@")){
-            alert(eotp)
             sessionStorage.setItem("otp",eotp)
+            axios.get(`http://localhost:8080/verifyemail?email=${email}&otp=${eotp}`)
+        .then((response)=>{
+           sessionStorage.setItem("user",JSON.stringify(response.data.data))
+        })
+        .catch((error)=>{
+            alert("Email ID not Found")
+            navi("/ft")
+        })
         }
         else
         {
@@ -25,15 +32,7 @@ const Forgot = () => {
          let num =sessionStorage.getItem("otp")
          if(num===otp)
          {
-            axios.get(`http://localhost:8080/verifyemail?email=${email}`)
-        .then((response)=>{
-           sessionStorage.setItem("user",JSON.stringify(response.data.data))
-           navi("/cp")
-        })
-        .catch((error)=>{
-            alert("Email ID not Found")
-            navi("/ft")
-        })
+           navi("/cp")  
          }
          else
          {

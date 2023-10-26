@@ -4,6 +4,7 @@ import "../index.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router'
 import "../css/mystyle.css"
+import Order from './Order'
 const Profiled = () => {
   let user =JSON.parse(sessionStorage.getItem("user"))
   let password=user.password
@@ -21,7 +22,6 @@ const Profiled = () => {
 let update=(e)=>{
 e.preventDefault()
        let User={name,email,phone,password,id}
-
        axios.put((`http://localhost:8080/user`),User)
        .then((response)=>{
         sessionStorage.setItem("user",JSON.stringify(response.data.data))
@@ -33,9 +33,9 @@ e.preventDefault()
        })
 }
   return (
-    <div className="d-flex justify-center align-items-center h-screen">
-
-      <Form className="w-1/2 min-w-max  border border-3 p-4 rounded">
+   <div id='form'>
+     <div  className=" d-flex  justify-center align-items-center h-screen ">    
+      <Form closebutton className="w-1/2 min-w-max border border-3 p-4 rounded">
      <InputGroup className="mb-3 h-14">
             <InputGroup.Text id='basicaddon1'>
             Name :
@@ -69,6 +69,7 @@ e.preventDefault()
      <Button onClick={update} className='float-right text-white'>Set Changes</Button>
      <Button onClick={back} className='text-white float-right mx-3'>Back</Button>
       </Form>
+   </div>
     </div>
   )
 }

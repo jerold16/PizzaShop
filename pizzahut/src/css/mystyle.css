@@ -3,6 +3,8 @@
     border: none;
 }
 #input{
-    outline: none;
-    
+    outline: none;   
+}
+#form{
+    background-image: url(../image/bg.jpeg);
 }
