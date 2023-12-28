@@ -5,7 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router';
 import { pizzaop } from '../ProfileComponent/Pizzas';
 let Items=[]
-const PizzaCard = () => {
+const 
+PizzaCard = () => {
   let [pizza,setPizza] =useState([])
   let navi=useNavigate()
   const [modalShow, setModalShow] = useState(false);

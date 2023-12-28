@@ -39,7 +39,7 @@ const HomeNav = () => {
     <div>
     <Navbar expand="lg" className="bg-body-tertiary my-0">
     <Container fluid>
-      <Navbar.Brand href="#home" className=" mx-5"> 
+      <Navbar.Brand href="/welcome" className=" mx-5"> 
         <img src={require('../image/sym.png')} 
         className=" w-20 bg-contain bg-transparent" alt="" />
       </Navbar.Brand>

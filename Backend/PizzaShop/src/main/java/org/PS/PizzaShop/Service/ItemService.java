@@ -15,16 +15,16 @@ public class ItemService {
 	private Itemdao dao;
 	@Autowired
 	private OrderDao odao;
-	public void save(Items it,DiaOrder od) {
-		it.setOrder(od);
-		dao.save(it);
-	}
-	public void saveall(List<Items> it,DiaOrder od){
-		od.getItems().addAll(it);
-		for(Items i : it) {
-			i.setOrder(od);
-		}
-		dao.saveall(it);
-	}
+//	public void save(Items it,DiaOrder od) {
+//		it.setOrder(od);
+//		dao.save(it);
+//	}
+//	public void saveall(List<Items> it,DiaOrder od){
+//		od.getItems().addAll(it);
+//		for(Items i : it) {
+//			i.setOrder(od);
+//		}
+//		dao.saveall(it);
+//	}
 
 }

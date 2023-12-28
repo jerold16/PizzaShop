@@ -17,9 +17,9 @@ public class EmailService {
 	private JavaMailSender sender;
 	public int generateotp() {
 		Random random=new Random();
-		int max=9999;
+		int max=8999;
 		int min=1000;
-		int otp=random.nextInt(max-min)+min;
+		int otp=random.nextInt(max)+min;
 		return otp;
 	}
 	public String sendemail(EmailConfiguration config) {

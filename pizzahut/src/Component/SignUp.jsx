@@ -13,13 +13,13 @@ const SignUp = () => {
     const handle = () =>{ setShow(false);
       navi("/")}
   const handleClose = (e) =>{
-    e.preventDefault()
+    
     let User={name,email,phone,password}
     axios.post((`http://localhost:8080/user`),User)
     .then((response)=>{
         sessionStorage.setItem("user",JSON.stringify(response.data.data))
         alert("registeration is Successfull")
-        navi("/")
+        navi("/welcome")
         setShow(false)
     })
     .catch((error)=>{
@@ -68,7 +68,7 @@ const SignUp = () => {
       </InputGroup>
       
       <div className="text-center">
-      <Button variant="primary"  onClick={handleClose}>
+      <Button variant="primary"  onClick={()=>handleClose()}>
             Register
           </Button></div>
             </Form>   

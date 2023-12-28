@@ -7,12 +7,8 @@ const Appnav = () => {
   return (
   <Navbar expand="lg" className="bg-body-tertiary my-0">
   <Container fluid>
-    <Navbar.Brand href="#home" className=" mx-5"> 
-      <img src={require('../image/sym.png')} 
-      className=" w-20 bg-contain bg-transparent" alt="" />
-    </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
       <Nav >
         <Nav.Link href="#home" className="text-black">Home</Nav.Link>
         <Nav.Link href="#menu">Menu</Nav.Link>

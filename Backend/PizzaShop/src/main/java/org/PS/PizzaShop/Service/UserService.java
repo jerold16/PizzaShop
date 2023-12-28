@@ -45,7 +45,7 @@ public class UserService {
 		+"        Your account Updated succesfully.Continue shopping");
 		service.sendemail(config);
 		res.setData(dao.Update(u));
-		res.setMessage("User has been added");
+		res.setMessage("User has been Updated");
 		res.setStatuscode(HttpStatus.ACCEPTED.value());
 		return new ResponseEntity<ResponseStructre<User>>(res,HttpStatus.ACCEPTED);
 	
@@ -119,7 +119,7 @@ public class UserService {
 			dao.Update(u);
 			config.setTo(u.getEmail());
 			config.setSubject("Password changes");
-			config.setText("Your password has been changed successfully");
+			config.setText("Your password has been changed successfully to "+u.getPassword());
 			service.sendemail(config);
 			res.setData(u);
 			res.setMessage("password has been updated");
